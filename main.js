@@ -1,0 +1,120 @@
+var http = require('http');
+var fs = require('fs');
+var url = require('url');
+var qs = require('querystring');
+
+function templateHTML(title, list, body){
+    return `
+    <!doctype html>
+    <html>
+    <head>
+      <title>WEB1 - ${title}</title>
+      <meta charset="utf-8">
+    </head>
+    <body>
+      <h1><a href="/">WEB</a></h1>
+      ${list}
+      <a href="/create">create</a>
+      ${body}
+    </body>
+    </html>`;
+}
+
+function templateList(filelist){
+  var list = '<ul>';
+  var i =0;
+  while(i < filelist.length){
+    list += `<li><a href="?id=${filelist[i]}">${filelist[i]}</a></li>`;
+    i += 1;
+  }
+  list += '</ul>';
+  return list;
+}
+
+var app = http.createServer(function(request,response){
+    var __url = request.url;
+    var queryData = url.parse(__url, true).query;
+    var pathname = url.parse(__url,true).pathname;
+//    console.log('url: '+__url+'  pathname: '+pathname);
+//  console.log(queryData.id); // "HTML", "CSS", "JavaScript"
+
+    if(pathname === '/'){ // 모든 메뉴. (create 제외.)
+
+      if(queryData.id === undefined){ // WEB 버튼 누른 경우. (홈)
+        fs.readdir('./data',function(error, filelist){
+          console.log(filelist);
+
+          var title = 'Welcome';
+          var description = 'Hello Node.js!';
+          var list = templateList(filelist);
+          var template = templateHTML(title, list, `<h2>${title}</h2>${description}`);
+          response.writeHead(200);
+          response.end(template);
+        })
+      }
+
+      else{ // 홈 버튼이 아닌 경우.
+        fs.readdir('./data',function(error, filelist){
+          fs.readFile(`data/${queryData.id}`,'utf8', function(err,description){
+            var title = queryData.id;
+            var list = templateList(filelist);
+            var template = templateHTML(title, list, `<h2>${title}</h2>${description}`);
+            response.writeHead(200);
+            response.end(template);
+          });
+        });
+      }
+    }else if (pathname === '/create'){ // 'create' 버튼 누른 경우.
+      fs.readdir('./data',function(error, filelist){
+
+        var title = 'WEB - create';
+        var description = 'Hello Node.js!';
+        var list = templateList(filelist);
+        var template = templateHTML(title, list, `
+          <form action="http://localhost:3000/create_process" method="post">
+          <p><input type='text' name="title" placeholder="title"></p>
+          <p>
+            <textarea name="description" placeholder="description"></textarea>
+          </p>
+          <p>
+            <input type="submit">
+          </p>
+          </form>
+          `);
+        response.writeHead(200);
+        response.end(template);
+      })
+    }else if (pathname === '/create_process'){
+      // POST 방식으로 전송된 데이터를 어떻게 extract(가져오는가)?
+      var body = '';
+
+      request.on('data',function(data){// 웹 브라우저가 POST 방식으로 데이터를 전송할 때, 그 데이터가 많은 경우를 대비.
+        body = body + data;
+      });
+
+      // 더 이상 들어올 정보가 없으면, 톨백함수 호출.
+      request.on('end', function(){
+
+        // query string module의 parse 함수를 이용해 정보를 객체화 할 수 있음.
+        var post = qs.parse(body);
+    //  console.log(post);
+    //  { title: 'MongoDB' , description: 'MongoDB is..' }
+
+        var title = post.title;
+        var description = post.description;
+        fs.writeFile(`data/${title}`, description, 'utf8',
+        function(err){ // 파일의 저장이 끝나면 실행되는 콜백함수. 여기서는 err처리는 안하느걸로.
+
+          // 페이지를 다른곳으로 redirection 시켜라.
+          response.writeHead(302, {Location: `/?id=${title}`});
+          response.end();
+        })
+      });
+
+    }else{
+      response.writeHead(404);
+      response.end('Not found');
+    }
+  });
+
+app.listen(3000);
