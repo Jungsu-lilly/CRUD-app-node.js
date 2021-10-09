@@ -115,12 +115,13 @@ console.log('url: '+__url+'  pathname: '+pathname);
 ```
 <br>
 각 태그를 누르고 결과를 확인해보자.<br><br>
-> 결과: 
+> **결과: **<br> 
 
-- WEB ) url: '/'  pathname: '/'
-- CSS ) url: '/?id=CSS'  pathname: '/'
-- HTML ) url: '/?id=HTML'  pathname: '/'
-- JavaScript ) url: '/?id=JavaScript'  pathname: '/'
-- MongoDB ) url: '/?id=MongoDB'  pathname: '/'
+WEB ) url: '/'  pathname: '/'
+CSS ) url: '/?id=CSS'  pathname: '/'
+HTML ) url: '/?id=HTML'  pathname: '/'
+JavaScript ) url: '/?id=JavaScript'  pathname: '/' 
+MongoDB ) url: '/?id=MongoDB'  pathname: '/'
+<br>
 
 > ** 2. **
