@@ -105,18 +105,16 @@ var qs = require('querystring');
 <br>
 
 >모든 테스트는 createServer() 메서드 안에서 이뤄집니다.
-
 <br>
+각 태그를 눌러 콘솔에 출력된 결과를 확인해봅니다.<br><br>
 
-> ** 1. url, pathname 값 확인 **
+> 1. url, pathname 값 확인
 
 ```javascript
 console.log('url: '+__url+'  pathname: '+pathname);
 ```
-<br>
-각 태그를 누르고 결과를 확인해보자.<br><br>
-> **결과: **<br> 
 
+결과: <br>
 WEB ) url: '/'  pathname: '/'
 CSS ) url: '/?id=CSS'  pathname: '/'
 HTML ) url: '/?id=HTML'  pathname: '/'
@@ -124,4 +122,13 @@ JavaScript ) url: '/?id=JavaScript'  pathname: '/'
 MongoDB ) url: '/?id=MongoDB'  pathname: '/'
 <br>
 
-> ** 2. **
+> 2. id값 확인 (querydata.id)로 추출함     
+
+```javascript
+console.log(queryData.id);
+```
+결과: <br>
+WEB 인 경우 undefined, <br>
+나머지의 경우 id값이 잘 출력되었다.
+
+>3.
