@@ -78,7 +78,7 @@ main.js<br>
 > **3. 'HTML' 누른 경우**<br><br>
 
 웹 브라우저에 'HTML' 출력, 밑에 줄에  data/HTML 의 내용이 출력되어야 합니다.<br><br>
-결과: 정상 작동 <br><br><br>
+> 결과: 정상 작동 <br><br><br>
 
 > **4. 'JavaScript' 누른 경우**<br><br>
 
@@ -92,9 +92,9 @@ main.js<br>
 또한 data 폴더 안에 사용자가 입력한 title 이름의 파일 생성, description 의 내용이 입력되어야 합니다.<br><br>
 결과: 정상 작동 <br><br><br>
 
-## **Else TestCase**
+# **Else TestCase**
 
-main.js 의 맨위에서 서버로부터 받아온 4가지 정보들을 확인해봄
+## main.js 의 맨위에서 서버로부터 받아온 정보들을 확인해봄
 
 ```javascript
 var http = require('http');
@@ -104,9 +104,8 @@ var qs = require('querystring');
 ```
 <br>
 
->모든 테스트는 createServer() 메서드 안에서 이뤄집니다.
-<br>
-각 태그를 눌러 콘솔에 출력된 결과를 확인해봅니다.<br><br>
+> ** 모든 Else TestCase는 createServer() 메서드 안에서 이뤄집니다. **
+> ** 각 태그를 눌러 콘솔에 출력된 결과를 확인해봅니다.** 
 
 > 1. url, pathname 값 확인
 
@@ -127,8 +126,39 @@ MongoDB ) url: '/?id=MongoDB'  pathname: '/'
 ```javascript
 console.log(queryData.id);
 ```
-결과: <br>
+결과:
 WEB 인 경우 undefined, <br>
 나머지의 경우 id값이 잘 출력되었다.
 
->3.
+> 3. filelist 값 확인
+ 
+fs.readdir() 메서드에서 테스트합니다.
+
+```javascript
+console.log(filelist);
+```
+결과:
+[ 'CSS', 'HTML', 'JavaScript', 'Limo', 'MongoDB', 'Nodejs' ]
+WEB을 눌렀을 때 data 폴더에 들어있는 파일 순서대로 정상 출력됨.
+
+## create_process 폴더에 POST 방식으로 전송된 데이터를 redirection 할 때 post 값을 확인해보자.
+```javascript
+else if (pathname === '/create'){ // 'create' 버튼 누른 경우
+```
+create 버튼을 눌러 사용자가 title과 description 을 생성한 후, 웹 브라우저는 POST 방식으로 전송된 데이터를
+다시 추출(extract)하게 되는데, post 값을 알아봅시다.
+
+```javascript
+request.on('end', function(){
+        var post = qs.parse(body);
+        console.log(post); // TestCase
+```
+
+결과:
+{ title: 'MongoDB' , description: 'MongoDB is..' }
+이런식으로 객체 형태로 저장이 되는것을 알 수 있다.
+qs.parse(body) 로 querystring modeule 의 parse 함수를 이용해 정보를 객체화 할 수 있다.
+그래서 콘솔에 출력하면 객체 형태로 나온다.
+
+
+
