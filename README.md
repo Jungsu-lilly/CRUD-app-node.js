@@ -105,7 +105,7 @@ main.js<br>
 
 # **Else TestCase**
 
-## main.js 의 맨위에서 서버로부터 받아온 정보들을 확인해봄
+### main.js 의 맨위에서 서버로부터 받아온 정보들을 확인해봄
 
 ```javascript
 var http = require('http');
