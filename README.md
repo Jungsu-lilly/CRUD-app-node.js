@@ -60,38 +60,56 @@ main.js<br>
 <br>
 
 ## 4. Test
-> 프로그램이 의도된 대로 잘 작동하는지 테스트합니다.<br><br>
+프로그램이 의도된 대로 잘 작동하는지 테스트합니다.<br><br>
 
-> **1. 'WEB' 누른경우:**<br><br>
+**1. 'WEB' 누른경우:**<br><br>
 
-웹 브라우저에 'Welcome'출력, 밑에 줄에 'Hello Node.js!' 가 표시되어야 합니다.<br>웹 브라우저의 주소: 'localhost:3000' , title: 'WEB - Welcome' 이여야 함.<br><br>
-- 결과: 정상 작동<br><br>
+> 웹 브라우저에 'Welcome'출력, 밑에 줄에 'Hello Node.js!' 가 표시되어야 합니다.<br>웹 브라우저의 주소: 'localhost:3000' , title: 'WEB - Welcome' 이여야 함.<br><br>
+
+- 결과: 정상 작동<br><br><br>
 
 **<u>`2, 3, 4 공통사항: 웹 페이지의 query string의 id값, title 이 각각의 이름으로 바뀌어야 합니다.`</u><br>**
 
 
-> **2. 'CSS' 누른 경우** <br><br>
+**2. 'CSS' 누른 경우** <br><br>
 
-웹 브라우저에 'CSS'출력, 밑에 줄에  data/CSS (data 디렉토리의 이름이 CSS인 파일) 의 내용이 출력되어야 합니다.<br><br>
+> 웹 브라우저에 'CSS'출력, 밑에 줄에  data/CSS (data 디렉토리의 이름이 CSS인 파일) 의 내용이 출력되어야 합니다.<br><br>
+
 - 결과: 정상 작동<br><br><br>
 
-> **3. 'HTML' 누른 경우**<br><br>
 
-웹 브라우저에 'HTML' 출력, 밑에 줄에  data/HTML 의 내용이 출력되어야 합니다.<br><br>
-- 결과: 정상 작동 <br><br>
+**3. 'HTML' 누른 경우**<br><br>
 
-> **4. 'JavaScript' 누른 경우**<br><br>
+> 웹 브라우저에 'HTML' 출력, 밑에 줄에  data/HTML 의 내용이 출력되어야 합니다.<br><br>
 
-웹 브라우저에 'JavaScript' 출력, 밑에 줄에 data/JavaScript 의 내용이 출력되어야 합니다.<br><br>
 - 결과: 정상 작동 <br><br>
 
 
-> **5. 'create' 누른 경우**<br><br>
+**4. 'JavaScript' 누른 경우**<br><br>
 
-웹 브라우저에 title과 description 을 입력받는 form 태그가 나타나고, 입력받아 '제출' 버튼을 누르면<br>
-리다이렉션이 일어나 사용자가 입력한 title 과 description이 출력됩니다. <br>
-또한 data 폴더 안에 사용자가 입력한 title 이름의 파일 생성, description 의 내용이 입력되어야 합니다.<br><br>
+> 웹 브라우저에 'JavaScript' 출력, 밑에 줄에 data/JavaScript 의 내용이 출력되어야 합니다.<br><br>
+- 결과: 정상 작동 <br><br>
+
+
+**5. 'create' 누른 경우**<br><br>
+
+> 웹 브라우저에 title과 description 을 입력받는 form 태그가 나타나고, 입력받아 '제출' 버튼을 누르면<br>
+> 리다이렉션이 일어나 사용자가 입력한 title 과 description이 출력됩니다. <br>
+> 또한 data 폴더 안에 사용자가 입력한 title 이름의 파일 생성, description 의 내용이 입력되어야 합니다.<br><br>
+
 - 결과: 정상 작동 <br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
 
 # **Else TestCase**
 
@@ -110,7 +128,7 @@ var qs = require('querystring');
 
 <br><br>
 
-> 1. url, pathname 값 확인
+1. url, pathname 값 확인
 
 ```javascript
 console.log('url: '+__url+'  pathname: '+pathname);
@@ -126,7 +144,8 @@ MongoDB ) url: '/?id=MongoDB'  pathname: '/' <br>
 <br><br>
 
 
-> 2. id값 확인 (querydata.id)로 추출함     
+2. id값 확인 (querydata.id)로 추출함     
+
 
 ```javascript
 console.log(queryData.id);
@@ -136,7 +155,7 @@ WEB 인 경우 undefined, 나머지의 경우 id값이 잘 출력되었다.
 <br><br>
 
 
-> 3. filelist 값 확인
+3. filelist 값 확인
  
 - fs.readdir() 메서드에서 테스트합니다.
 
