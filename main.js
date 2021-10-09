@@ -35,14 +35,16 @@ var app = http.createServer(function(request,response){
     var __url = request.url;
     var queryData = url.parse(__url, true).query;
     var pathname = url.parse(__url,true).pathname;
-//    console.log('url: '+__url+'  pathname: '+pathname);
-//  console.log(queryData.id); // "HTML", "CSS", "JavaScript"
+
+//    console.log('url: '+__url+'  pathname: '+pathname); TestCase
+//    console.log(queryData.id);  TestCase
+    // "HTML", "CSS", "JavaScript"
 
     if(pathname === '/'){ // 모든 메뉴. (create 제외.)
 
       if(queryData.id === undefined){ // WEB 버튼 누른 경우. (홈)
         fs.readdir('./data',function(error, filelist){
-          console.log(filelist);
+    //     console.log(filelist); Testcase
 
           var title = 'Welcome';
           var description = 'Hello Node.js!';
@@ -97,7 +99,7 @@ var app = http.createServer(function(request,response){
 
         // query string module의 parse 함수를 이용해 정보를 객체화 할 수 있음.
         var post = qs.parse(body);
-    //  console.log(post);
+        console.log(post);
     //  { title: 'MongoDB' , description: 'MongoDB is..' }
 
         var title = post.title;
