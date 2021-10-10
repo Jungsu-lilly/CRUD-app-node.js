@@ -1,7 +1,7 @@
 var http = require('http');
 var fs = require('fs');
 var url = require('url');
-var qs = require('querystring');
+var qs = require('querystring'); // node.js 가 가지고 있는 모듈을 가지고 오는 것.
 
 function templateHTML(title, list, body){
     return `
@@ -37,8 +37,7 @@ var app = http.createServer(function(request,response){
     var pathname = url.parse(__url,true).pathname;
 
 //    console.log('url: '+__url+'  pathname: '+pathname); TestCase
-//    console.log(queryData.id);  TestCase
-    // "HTML", "CSS", "JavaScript"
+//    console.log(queryData.id);  TestCase.  "HTML", "CSS", "JavaScript"
 
     if(pathname === '/'){ // 모든 메뉴. (create 제외.)
 
@@ -53,9 +52,7 @@ var app = http.createServer(function(request,response){
           response.writeHead(200);
           response.end(template);
         })
-      }
-
-      else{ // 홈 버튼이 아닌 경우.
+      }else{ // 홈 버튼이 아닌 경우.
         fs.readdir('./data',function(error, filelist){
           fs.readFile(`data/${queryData.id}`,'utf8', function(err,description){
             var title = queryData.id;
@@ -66,7 +63,9 @@ var app = http.createServer(function(request,response){
           });
         });
       }
-    }else if (pathname === '/create'){ // 'create' 버튼 누른 경우.
+    } // 모든 메뉴. (create 제외.)
+
+    else if (pathname === '/create'){ // 'create' 버튼 누른 경우.
       fs.readdir('./data',function(error, filelist){
 
         var title = 'WEB - create';
@@ -86,15 +85,19 @@ var app = http.createServer(function(request,response){
         response.writeHead(200);
         response.end(template);
       })
-    }else if (pathname === '/create_process'){
+    }
+    else if (pathname === '/create_process'){
+      // create 로 컨텐츠 생성 후 제출 버튼을 눌렀을
       // POST 방식으로 전송된 데이터를 어떻게 extract(가져오는가)?
       var body = '';
 
-      request.on('data',function(data){// 웹 브라우저가 POST 방식으로 데이터를 전송할 때, 그 데이터가 많은 경우를 대비.
+      // request 안에 post 정보가 들어있다.
+      request.on('data',function(data){// 웹 브라우저가 POST 방식으로 서버에 데이터를 전송할 때, 서버가
+      // 콜백함수를 호출함.  그 데이터가 많은 경우를 대비.
         body = body + data;
       });
 
-      // 더 이상 들어올 정보가 없으면, 톨백함수 호출.
+      // 더 이상 들어올 정보가 없으면(정보 수신이 끝났다고 판단.), 'end'다음의 톨백함수 호출.
       request.on('end', function(){
 
         // query string module의 parse 함수를 이용해 정보를 객체화 할 수 있음.
@@ -105,7 +108,7 @@ var app = http.createServer(function(request,response){
         var title = post.title;
         var description = post.description;
         fs.writeFile(`data/${title}`, description, 'utf8',
-        function(err){ // 파일의 저장이 끝나면 실행되는 콜백함수. 여기서는 err처리는 안하느걸로.
+        function(err){ // 파일의 저장이 끝나면 실행되는 콜백함수. 여기서는 err처리는 안하는 걸로.
 
           // 페이지를 다른곳으로 redirection 시켜라.
           response.writeHead(302, {Location: `/?id=${title}`});

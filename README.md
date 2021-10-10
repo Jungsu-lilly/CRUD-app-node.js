@@ -1,11 +1,12 @@
 # Node.js WEB APP
-node.js를 사용한 서버에서 동작하는 간단한 반응형 웹페이지
+node.js를 사용한 웹 브라우저와 서버에서 상호 작용하여 동작하는 간단한 반응형 웹페이지<br>
+사용자가 웹을 통해 컨텐츠를 생성하고, 수정하고, 삭제할 수 있는 WEB Application.<br>
 
 ------------------
 # 개발 기간 및 환경
 
-+ 기간: 2021.10.5 ~ 2021.10.10
- 
++ 기간: 2021.10.3 ~ 2021.10.10
+
 + OS: Windows 10
 
 + LANGUAGE: JavaScript
@@ -25,7 +26,7 @@ JavaScript 언어로 웹 브라우저, 서버 사이드에서 동작하는 반�
 > 최상단에 홈버튼 WEB이 있고, 기본적으로 3개의 링크(CSS, HTML, JavaScript)들이 있습니다.  
 >   
 > 홈은 기본 화면으로 이동. 3개의 링크를 클릭하면 해당하는 각각의 페이지로 이동합니다.   
-> 
+>
 > 사용자는 'CREATE' 를 통해 새로운 내용을 웹 페이지에 직접 추가할 수 있습니다.    
 <br>
 
@@ -42,24 +43,24 @@ JavaScript 언어로 웹 브라우저, 서버 사이드에서 동작하는 반�
 - 프로그램의 실행파일은 main.js 입니다.<br>
 - cmd 창에서 'node main.js' 를 실행합니다.<br>
 - 크롬 웹 브라우저에서 실행 여부를 확인합니다.  주소: 'http://localhost:3000/'<br>
-- 프로그램이 정상적으로 실행되기 위해서는 다음 파일들이 Nodejs_생활코딩 과 같은 폴더 내에 존재해야 합니다. 파일이 존재하지 않는 경우 실행이 되지 않습니다.<br><br>
+- 가장 상단에 WEB, 그 밑 목록으로 CSS, HTML, JavaScript 가 있고 각 항목들을 누르면 해당 페이지로 이동합니다.<br>
+- create 항목을 눌러 사용자가 직접 컨텐츠를 생성, 수정, 삭제할 수 있습니다.
+<br><br><br>
 
-### 파일 목록<br>
-data 폴더
-- CSS, HTML, JavaScript 파일 (txt 형식)
+### 파일 목록
+프로그램이 정상적으로 실행되기 위해서는 다음 파일들이 'Nodejs_생활코딩'과 같은 폴더 내에 존재해야 합니다.<br>
+그렇지 않을 경우 실행이 되지 않습니다.<br><br>
 
-syntax 폴더
-- form.html<br>
-
-1.html<br>
-2.html<br>
-3.html <br>
 index.html<br>
-main.js<br>
+main.js<br><br>
+
+data 폴더
+- CSS, HTML, JavaScript 파일<br>
 <br>
 <br>
 
-# 4. Test
+
+# 4. TestCase
 프로그램이 의도된 대로 잘 작동하는지 테스트합니다.<br><br>
 
 **1. 'WEB' 누른경우:**<br>
@@ -93,9 +94,8 @@ main.js<br>
 
 **5. 'create' 누른 경우**<br>
 
-> 웹 브라우저에 title과 description 을 입력받는 form 태그가 나타나고, 입력받아 '제출' 버튼을 누르면<br>
-> 리다이렉션이 일어나 사용자가 입력한 title 과 description이 출력됩니다. <br>
-> 또한 data 폴더 안에 사용자가 입력한 title 이름의 파일 생성, description 의 내용이 입력되어야 합니다.<br><br>
+> 웹 브라우저에 제콕e과 내용을 입력받고, '제출' 버튼을 누르면 웹 페이지에 사용자가 입력한 내용이 출력됩니다.<br>
+> data 폴더 안에 사용자가 입력한 title 이름의 파일 생성, description 의 내용이 입력되어야 합니다.<br><br>
 
 - 결과: 정상 작동 <br><br><br><br><br><br>
 
@@ -103,9 +103,9 @@ main.js<br>
 
 
 
-# **Else TestCase**
+## **변수값 Test Case**
 
-### main.js 의 맨위에서 서버로부터 받아온 정보들을 확인해봄
+### main.js 의 맨 위, node.js 모듈에서 받아온 값들을 확인해 봅시다.
 
 ```javascript
 var http = require('http');
@@ -116,17 +116,38 @@ var qs = require('querystring');
 <br>
 
 > **모든 Else TestCase는 createServer() 메서드 안에서 이뤄집니다.**
-> **각 태그를 눌러 콘솔에 출력된 결과를 확인해봅니다.** 
+> **각 태그를 눌러 콘솔에 출력된 결과를 확인해봅니다.**
 
 <br><br>
 
-1. url, pathname 값 확인
+1. qs 값 확인
+
+```javaScript
+console.log(qs);
+```
+
+결과:
+{
+  unescapeBuffer: [Function: unescapeBuffer],
+  unescape: [Function: qsUnescape],
+  escape: [Function: qsEscape],
+  stringify: [Function: stringify],
+  encode: [Function: stringify],
+  parse: [Function: parse],
+  decode: [Function: parse]
+}<br>
+객체 형태로, 안에 여러 함수들이 담겨 있음.
+이 프로그램에서는 POST 방식으로 전송된 데이터를 가져와 처리하기 위해 qs.parse()를 사용함.
+<br><br><br>
+
+
+2. url, pathname 값 확인
 
 ```javascript
 console.log('url: '+__url+'  pathname: '+pathname);
 ```
 
-- 결과: <br>
+결과: <br>
 
 WEB ) url: '/'  pathname: '/' <br>
 CSS ) url: '/?id=CSS'  pathname: '/' <br>
@@ -136,7 +157,7 @@ MongoDB ) url: '/?id=MongoDB'  pathname: '/' <br>
 <br><br>
 
 
-2. id값 확인 (querydata.id)로 추출함     
+3. id값 확인 (querydata.id)로 추출함     
 
 ```javascript
 console.log(queryData.id);
@@ -146,9 +167,8 @@ WEB 인 경우 undefined, 나머지의 경우 id값이 잘 출력되었다.
 <br><br>
 
 
+4. filelist 값 확인
 
-3. filelist 값 확인
- 
 - fs.readdir() 메서드에서 테스트합니다.
 
 ```javascript
@@ -157,27 +177,24 @@ console.log(filelist);
 결과:
 [ 'CSS', 'HTML', 'JavaScript', 'Limo', 'MongoDB', 'Nodejs' ] <br>
 WEB을 눌렀을 때 data 폴더에 들어있는 파일 순서대로 정상 출력됨.
-<br><br><br><br><br>
+<br><br>
 
-## POST 방식으로 전송된 데이터를 redirection 할 때 post 값을 확인해보자. <br>
+
+
+## POST 방식으로 웹 브라우저가 전송한 데이터를 가져올 때 Testing
+<br>
 ```javascript
 else if (pathname === '/create'){ // 'create' 버튼 누른 경우
 ```
 <br>
-create 버튼을 눌러 사용자가 title과 description 을 생성한 후, 웹 브라우저는 POST 방식으로 전송된 데이터를
-다시 추출(extract)하게 되는데, post 값을 알아봅시다.
+create 버튼을 눌러 사용자가 내용을 생성하고, POST 방식으로 전송하게 됩니다.
+이때 response.on 통해 가져오게 되고, post 값을 확인합니다.
 
 ```javascript
-request.on('end', function(){
-        var post = qs.parse(body);
-        console.log(post); // TestCase
+console.log(post);
 ```
 
 결과:
 { title: 'MongoDB' , description: 'MongoDB is..' } <br><br>
-객체 형태로 저장이 되는것을 알 수 있다.
-qs.parse(body) 로 querystring modeule 의 parse 함수를 이용해 정보를 객체화 할 수 있다.
+객체 형태로 저장. qs.parse(body) 정보를 객체화 할 수 있다.
 따라서 콘솔에 출력하면 객체 형태로 나오는 것을 알 수 있다.
-
-
-
