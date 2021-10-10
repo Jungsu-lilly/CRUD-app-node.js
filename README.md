@@ -97,15 +97,13 @@ data 폴더
 > 웹 브라우저에 제콕e과 내용을 입력받고, '제출' 버튼을 누르면 웹 페이지에 사용자가 입력한 내용이 출력됩니다.<br>
 > data 폴더 안에 사용자가 입력한 title 이름의 파일 생성, description 의 내용이 입력되어야 합니다.<br><br>
 
-- 결과: 정상 작동 <br><br><br><br><br><br>
+- 결과: 정상 작동 <br><br><br><br>
 
 
 
+### **변수값**
 
-
-## **변수값 Test Case**
-
-### main.js 의 맨 위, node.js 모듈에서 받아온 값들을 확인해 봅시다.
+#### main.js 의 맨 위, node.js 모듈에서 받아온 값들을 확인해 봅시다.
 
 ```javascript
 var http = require('http');
@@ -164,7 +162,7 @@ console.log(queryData.id);
 ```
 결과:
 WEB 인 경우 undefined, 나머지의 경우 id값이 잘 출력되었다.
-<br><br>
+<br><br><br>
 
 
 4. filelist 값 확인
@@ -177,15 +175,14 @@ console.log(filelist);
 결과:
 [ 'CSS', 'HTML', 'JavaScript', 'Limo', 'MongoDB', 'Nodejs' ] <br>
 WEB을 눌렀을 때 data 폴더에 들어있는 파일 순서대로 정상 출력됨.
-<br><br>
+<br><br><br><br>
 
 
-
-## POST 방식으로 웹 브라우저가 전송한 데이터를 가져올 때 Testing
-<br>
+### POST 방식으로 웹 브라우저가 전송한 데이터를 가져올 때
 ```javascript
-else if (pathname === '/create'){ // 'create' 버튼 누른 경우
+else if (pathname === '/create') // 'create' 버튼 누른 경우
 ```
+
 <br>
 create 버튼을 눌러 사용자가 내용을 생성하고, POST 방식으로 전송하게 됩니다.
 이때 response.on 통해 가져오게 되고, post 값을 확인합니다.
@@ -196,5 +193,5 @@ console.log(post);
 
 결과:
 { title: 'MongoDB' , description: 'MongoDB is..' } <br><br>
-객체 형태로 저장. qs.parse(body) 정보를 객체화 할 수 있다.
+객체 형태로 저장. qs.parse(body) 정보를 객체화 할 수 있다.<br>
 따라서 콘솔에 출력하면 객체 형태로 나오는 것을 알 수 있다.
