@@ -3,41 +3,41 @@ var fs = require('fs');
 var url = require('url');
 var qs = require('querystring'); // node.js 가 가지고 있는 모듈을 가지고 오는 것.
 
-function templateHTML(title, list, body, control){
-    return `
-    <!doctype html>
-    <html>
-    <head>
-      <title>WEB1 - ${title}</title>
-      <meta charset="utf-8">
-    </head>
-    <body>
-      <h1><a href="/">WEB</a></h1>
-      ${list}
-      ${control}
-      ${body}
-    </body>
-    </html>`;
+var template = {
+  html: function(title, list, body, control){
+      return `
+      <!doctype html>
+      <html>
+      <head>
+        <title>WEB1 - ${title}</title>
+        <meta charset="utf-8">
+      </head>
+      <body>
+        <h1><a href="/">WEB</a></h1>
+        ${list}
+        ${control}
+        ${body}
+      </body>
+      </html>`;
+  },
+
+  list: function(filelist){
+    var list = '<ul>';
+    var i =0;
+    while(i < filelist.length){
+      list += `<li><a href="?id=${filelist[i]}">${filelist[i]}</a></li>`;
+      i += 1;
+    }
+    list += '</ul>';
+    return list;
+  }
 }
 
-function templateList(filelist){
-  var list = '<ul>';
-  var i =0;
-  while(i < filelist.length){
-    list += `<li><a href="?id=${filelist[i]}">${filelist[i]}</a></li>`;
-    i += 1;
-  }
-  list += '</ul>';
-  return list;
-}
 
 var app = http.createServer(function(request,response){
     var __url = request.url;
     var queryData = url.parse(__url, true).query;
     var pathname = url.parse(__url,true).pathname;
-
-//    console.log('url: '+__url+'  pathname: '+pathname); TestCase
-//    console.log(queryData.id);  TestCase.  "HTML", "CSS", "JavaScript"
 
     if(pathname === '/'){ // 모든 메뉴. (create 제외.)
 
@@ -47,20 +47,21 @@ var app = http.createServer(function(request,response){
 
           var title = 'Welcome';
           var description = 'Hello Node.js!';
-          var list = templateList(filelist);
-          var template = templateHTML(title, list,
+          var list = template.list(filelist);
+          var html = template.html(title, list,
             `<h2>${title}</h2>${description}`,
             `<a href="/create">create</a>`
           );
           response.writeHead(200);
-          response.end(template);
+          response.end(html);
         })
-      }else{ // 홈 버튼이 아닌 경우.
+      }
+      else{ // 홈 버튼이 아닌 경우.
         fs.readdir('./data',function(error, filelist){
           fs.readFile(`data/${queryData.id}`,'utf8', function(err,description){
             var title = queryData.id;
-            var list = templateList(filelist);
-            var template = templateHTML(title, list,
+            var list = template.list(filelist);
+            var html = template.html(title, list,
               `<h2>${title}</h2>${description}`,
               `<a href="/create">create</a>
                <a href="/update?id=${title}">update</a>
@@ -71,7 +72,7 @@ var app = http.createServer(function(request,response){
                `
              );
             response.writeHead(200);
-            response.end(template);
+            response.end(html);
           });
         });
       }
@@ -82,8 +83,8 @@ var app = http.createServer(function(request,response){
 
         var title = 'WEB - create';
         var description = 'Hello Node.js!';
-        var list = templateList(filelist);
-        var template = templateHTML(title, list,
+        var list = template.list(filelist);
+        var html = template.html(title, list,
           `
           <form action="/create_process" method="post">
           <p><input type='text' name="title" placeholder="title"></p>
@@ -96,7 +97,7 @@ var app = http.createServer(function(request,response){
           </form>, ''
           `);
         response.writeHead(200);
-        response.end(template);
+        response.end(html);
       })
     }
     else if (pathname === '/create_process'){
@@ -133,8 +134,8 @@ var app = http.createServer(function(request,response){
       fs.readdir('./data',function(error, filelist){
         fs.readFile(`data/${queryData.id}`,'utf8', function(err,description){
           var title = queryData.id;
-          var list = templateList(filelist);
-          var template = templateHTML(title, list,
+          var list = template.list(filelist);
+          var html = template.html(title, list,
             `
               <form action="/update_process" method="post">
                 <input type="hidden" name="id" value="${title}">
@@ -150,7 +151,7 @@ var app = http.createServer(function(request,response){
             `<a href="/create">create</a> <a href="/update?id=${title}">update</a>`
            );
           response.writeHead(200);
-          response.end(template);
+          response.end(html);
         });
       });
     }else if(pathname==='/update_process'){
@@ -160,6 +161,7 @@ var app = http.createServer(function(request,response){
       });
       request.on('end', function(){
         var post = qs.parse(body);
+        console.log(post);
         var id = post.id;
         var title = post.title;
         var description = post.description;
