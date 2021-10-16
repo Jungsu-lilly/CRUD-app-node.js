@@ -1,9 +1,0 @@
-diff a/README.md b/README.md	(rejected hunks)
-@@ -46,6 +46,7 @@
- 6. create, update, delete
- <br>
- 
-+
- # 3. 프로그램 구성 및 실행
- 
- - 프로그램의 실행파일은 main.js 입니다.<br>
