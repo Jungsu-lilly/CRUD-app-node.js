@@ -3,36 +3,7 @@ var fs = require('fs');
 var url = require('url');
 var qs = require('querystring'); // node.js 가 가지고 있는 모듈을 가지고 오는 것.
 
-var template = {
-  html: function(title, list, body, control){
-      return `
-      <!doctype html>
-      <html>
-      <head>
-        <title>WEB1 - ${title}</title>
-        <meta charset="utf-8">
-      </head>
-      <body>
-        <h1><a href="/">WEB</a></h1>
-        ${list}
-        ${control}
-        ${body}
-      </body>
-      </html>`;
-  },
-
-  list: function(filelist){
-    var list = '<ul>';
-    var i =0;
-    while(i < filelist.length){
-      list += `<li><a href="?id=${filelist[i]}">${filelist[i]}</a></li>`;
-      i += 1;
-    }
-    list += '</ul>';
-    return list;
-  }
-}
-
+var template = require('./lib/template.js');
 
 var app = http.createServer(function(request,response){
     var __url = request.url;
@@ -54,7 +25,7 @@ var app = http.createServer(function(request,response){
           );
           response.writeHead(200);
           response.end(html);
-        })
+        });
       }
       else{ // 홈 버튼이 아닌 경우.
         fs.readdir('./data',function(error, filelist){

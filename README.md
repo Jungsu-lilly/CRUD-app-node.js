@@ -5,20 +5,21 @@ node.js를 사용한 웹 브라우저와 서버에서 상호 작용하여 동작
 ------------------
 # 개발 기간 및 환경
 
-+ 기간: 2021.10.3 ~ 2021.10.10
++ 기간: 2021.10.3 ~ 2021.10.14
 
 + OS: Windows 10
 
 + LANGUAGE: JavaScript
 
-+ Tools: Atom, node.js
++ Tools: Atom
 
-+ 실행환경: Window PowerShell , Chrome 웹 브라우저  (크롬을 권장합니다.)
++ 실행환경: Window PowerShell , Chrome 웹 브라우저  (크롬을 권장합니다.), Nodejs
 ------------------
 # 목적
 
 JavaScript 언어로 웹 브라우저, 서버 사이드에서 동작하는 반응형 웹 APP 을 만들어 보는것입니다.<br>
-웹 브라우저와 웹 서버간의 동작 원리를 파악하고, 백엔드 전반적인 기초적인 지식을 쌓는것입니다.
+CRAUD 기능을 구현해 클라이언트와 서버간의 동작 원리를 파악하고 서버 동작의 전반적인 기초적인 지식을 쌓는것입니다.
+
 <br>
 
 -------------------
@@ -60,11 +61,14 @@ JavaScript 언어로 웹 브라우저, 서버 사이드에서 동작하는 반�
 프로그램이 정상적으로 실행되기 위해서는 다음 파일들이 'Nodejs_생활코딩'과 같은 폴더 내에 존재해야 합니다.<br>
 그렇지 않을 경우 실행이 되지 않습니다.<br><br>
 
--index.html<br>
--main.js<br><br>
+-main.js (실행 파일)<br><br>
 
 data 폴더
-> CSS, HTML, JavaScript 파일
+> CSS, HTML, JavaScript 파일 (기본)
+
+lib 폴더
+> template.js 파일
+
 
 <br>
 
