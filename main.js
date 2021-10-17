@@ -4,6 +4,7 @@ var url = require('url');
 var qs = require('querystring'); // node.js 가 가지고 있는 모듈을 가지고 오는 것.
 
 var template = require('./lib/template.js');
+var path = require('path'); // 사용자로부터 경로가 들어온 모든 곳의 내용을 바꿔주자.
 
 var app = http.createServer(function(request,response){
     var __url = request.url;
@@ -14,7 +15,6 @@ var app = http.createServer(function(request,response){
 
       if(queryData.id === undefined){ // WEB 버튼 누른 경우. (홈)
         fs.readdir('./data',function(error, filelist){
-    //     console.log(filelist); Testcase
 
           var title = 'Welcome';
           var description = 'Hello Node.js!';
@@ -29,7 +29,8 @@ var app = http.createServer(function(request,response){
       }
       else{ // 홈 버튼이 아닌 경우.
         fs.readdir('./data',function(error, filelist){
-          fs.readFile(`data/${queryData.id}`,'utf8', function(err,description){
+          var filteredId = path.parse(queryData.id).base;
+          fs.readFile(`data/${filteredId}`,'utf8', function(err,description){
             var title = queryData.id;
             var list = template.list(filelist);
             var html = template.html(title, list,
@@ -103,7 +104,8 @@ var app = http.createServer(function(request,response){
     }
     else if(pathname==='/update'){ // 업데이트 버튼
       fs.readdir('./data',function(error, filelist){
-        fs.readFile(`data/${queryData.id}`,'utf8', function(err,description){
+        var filteredId = path.parse(queryData.id).base;
+        fs.readFile(`data/${filteredId}`,'utf8', function(err,description){
           var title = queryData.id;
           var list = template.list(filelist);
           var html = template.html(title, list,
@@ -152,7 +154,8 @@ var app = http.createServer(function(request,response){
       request.on('end', function(){
         var post = qs.parse(body);
         var id = post.id;
-        fs.unlink(`data/${id}`, function(error){
+        var filteredId = path.parse(id).base;
+        fs.unlink(`data/${filteredId}`, function(error){
           response.writeHead(302, {Location: `/`});
           response.end();
         })
