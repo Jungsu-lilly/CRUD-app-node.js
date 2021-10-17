@@ -66,7 +66,7 @@ var app = http.createServer(function(request,response){
           <p>
             <input type="submit">
           </p>
-          </form>, ''
+          </form>
           `);
         response.writeHead(200);
         response.end(html);
