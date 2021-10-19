@@ -222,9 +222,9 @@ console.log(post);
 form 태그로 이름을 부여하고(name) 그것이 post에서 속성으로 되어 있는것을 알 수 있다.
 <br><br><br>
 
-###보안
+### 보안
 목적: 악의적인 의도로 접근하거나 정보를 캐려는 사용자를 막기 위함.<br><br>
-####1. path 이용한 보안
+#### 1. path 이용한 보안
 ```javascript
 else{ // 홈 버튼이 아닌 경우.
   fs.readdir('./data',function(error, filelist){
@@ -254,7 +254,7 @@ fs.readFile(`data/${filteredId}`,'utf8', function(err,description){
 ```
 이제 queryData에 '../password.js' 처럼 다른 값이 와도 이동할 수 없음.<br><br>
 
-####2. sanitize-html 을 이용한 보안.
+#### 2. sanitize-html 을 이용한 보안.
 ```javascript
   var title = queryData.id;
   var sanitizedTitle = sanitizeHtml(title);
