@@ -220,3 +220,48 @@ console.log(post);
 { title: 'MongoDB' , description: 'MongoDB is..' } <br><br>
 객체 형태로 저장. qs.parse(body) 정보를 객체화 할 수 있다.<br>
 form 태그로 이름을 부여하고(name) 그것이 post에서 속성으로 되어 있는것을 알 수 있다.
+<br><br><br>
+
+###보안
+목적: 악의적인 의도로 접근하거나 정보를 캐려는 사용자를 막기 위함.<br><br>
+####1. path 이용한 보안
+```javascript
+else{ // 홈 버튼이 아닌 경우.
+  fs.readdir('./data',function(error, filelist){
+    fs.readFile(`data/${queryData.id}`,'utf8', function(err,description){
+```
+다음과 같이 queryData.id 값을 조작해 의도되지 않은 경로로 접근할 수 있습니다.<br>
+Data 폴더의 밖으로 나가 모든 파일에 접근할 수 있는 대참사가 발생 가능합니다.
+입력: ```javaScript
+fs.readFile(`data/${../password.js}`,'utf8', function(err,description){
+```
+결과: module.exports = { id: 'matt1235', password: '1235' }<br>
+password.js 파일의 모든 정보가 출력됨.<br><br>
+입력: <br>
+```javascript
+  var filteredId = path.parse(queryData.id);
+  console.log(filteredId);
+```
+결과: <br>
+{ root: '', dir: '', base: 'JavaScript', ext: '', name: 'JavaScript' }
+{ root: '', dir: '..', base: 'password', ext: '', name: 'password' }
+{ root: '', dir: '', base: 'HTML', ext: '', name: 'HTML' }
+객체 반환. 여기서 data 외의 다른 디렉토리로 가는 것을 막기 위해 base 값 사용.<br>
+
+```javascript
+var filteredId = path.parse(queryData.id).base;
+fs.readFile(`data/${filteredId}`,'utf8', function(err,description){
+```
+이제 queryData에 '../password.js' 처럼 다른 값이 와도 이동할 수 없음.<br><br>
+
+####2. sanitize-html 을 이용한 보안.
+```javascript
+  var title = queryData.id;
+  var sanitizedTitle = sanitizeHtml(title);
+  var sanitizedDescription = sanitizeHtml(description, {
+    allowedTags: ['h1']
+  });
+```
+title, description 을 살균(sanitize) 함으로써 악의적인 실행을 방지합니다.<br>
+예를 들어 <script>로 둘러쌓여 사용자를 다른 곳으로 보내버린다던지 하는 실행을 태그를 제거해 버림으로써 무효화 할 수 있습니다.<br>
+sanitizeHtml 안에 허용할 태그를 설정할 수 있습니다.
